@@ -53,9 +53,9 @@ production: (data.solar_farm?.history?.[i]?.value || 0) + (data.wind_turbine?.hi
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <GlassPanel title="Grid Balance Topology" className="lg:col-span-2" accentColor="cyan">
-          <div className="h-[450px] w-full mt-4">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={aggregateHistory}>
+          <div className="h-[450px] w-full mt-4 min-h-[100px]">
+            <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+              <AreaChart data={aggregateHistory} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorCons" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.3}/>
@@ -78,7 +78,7 @@ production: (data.solar_farm?.history?.[i]?.value || 0) + (data.wind_turbine?.hi
         
         <GlassPanel title="Sector Load Distribution" accentColor="purple">
           <div className="h-[450px] w-full flex items-center justify-center">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="100%" minWidth={0}>
               <RadarChart cx="50%" cy="50%" outerRadius="75%" data={radarData}>
                 <PolarGrid stroke="#ffffff10" />
                 <PolarAngleAxis dataKey="subject" stroke="#ffffff40" fontSize={9} fontVariant="black" />

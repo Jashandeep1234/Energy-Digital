@@ -70,14 +70,14 @@ export const getGeminiResponse = async (prompt: string) => {
 
   for (const modelName of MODELS) {
     try {
-      console.log(`[NeuralSync] Engaging ${modelName}...`);
+      if (process.env.NODE_ENV === 'development') console.log(`[NeuralSync] Engaging ${modelName}...`);
       const model = genAI.getGenerativeModel({ model: modelName });
       const result = await model.generateContent(prompt);
       const text = result.response.text();
       if (text) return text;
     } catch (e: any) {
       const msg = e?.message || "";
-      console.warn(`Model ${modelName} failed:`, msg);
+      if (process.env.NODE_ENV === 'development') console.debug(`Model ${modelName} fallback:`, msg);
       lastError = msg;
       
       if (msg.includes("429") || e?.status === 429) {
@@ -96,10 +96,11 @@ export const getGeminiResponse = async (prompt: string) => {
 
   // If we've exhausted all models and hit quota, use fallback instead of error
   if (isQuotaExhausted) {
-    console.info("[NeuralSync] Quota exhausted, activating fallback synthesis.");
+    if (process.env.NODE_ENV === 'development') console.debug("[NeuralSync] Quota exhausted, using fallback.");
     return getFallbackInsight(prompt);
   }
 
+  if (process.env.NODE_ENV === 'development') console.error(`[NeuralSync] All models failed: ${lastError.substring(0, 50)}`);
   return `Neural Cluster Offline. Error: ${lastError.substring(0, 50)}...`;
 };
 
@@ -144,13 +145,13 @@ export const useEnergyData = () => {
       }
       setLoading(false);
     }, (err) => {
-      console.error("Data stream failed:", err);
+      if (process.env.NODE_ENV === 'development') console.error("Data stream failed:", err);
       setData(DEFAULT_ENERGY_DATA);
       setLoading(false);
     });
 
     const contextRef = ref(db, "settings/campusContext");
-    const unsubContext = onValue(contextRef, (s) => s.exists() && setContext(s.val()));
+    const unsubContext = onValue(contextRef, (s) => s.exists() && setContext(s.val()), () => {});
     
     return () => { unsubEnergy(); unsubContext(); };
   }, []);
@@ -175,8 +176,8 @@ export const simulateData = async () => {
       updates[`energy/${b}/history`] = [...(bData.history || []), { timestamp: timeStr, value: newVal }].slice(-15);
     }
     await update(ref(db), updates);
-    console.log("[Synthesis] Grid synchronization successful.");
+    if (process.env.NODE_ENV === 'development') console.debug("[Synthesis] Grid sync complete.");
   } catch (e) { 
-    console.error("Synthesis error:", e);
+    if (process.env.NODE_ENV === 'development') console.error("Synthesis error:", e);
   }
 };

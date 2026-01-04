@@ -121,9 +121,9 @@ export const GlassPanel = ({ title, children, className, style, innerClassName, 
 };
 
 export const EnergyChart = ({ data, color = "#3b82f6" }: { data: any[], color?: string }) => (
-  <div className="h-full w-full">
-    <ResponsiveContainer width="100%" height="100%">
-      <AreaChart data={data}>
+  <div className="h-full w-full min-h-[40px]">
+    <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+      <AreaChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
         <defs>
           <linearGradient id={`color-${color.replace('#', '')}`} x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor={color} stopOpacity={0.3} />

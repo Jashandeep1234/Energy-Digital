@@ -30,13 +30,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     getRedirectResult(auth)
       .then((result) => {
         if (result?.user) {
-          console.log("Redirect sign-in successful:", result.user.email);
+          if (process.env.NODE_ENV === 'development') console.log("Redirect sign-in successful:", result.user.email);
           setUser(result.user);
           toast.success("Welcome back, " + (result.user.displayName || result.user.email));
         }
       })
       .catch((error) => {
-        console.error("Redirect result error:", error);
+        if (process.env.NODE_ENV === 'development') console.error("Redirect result error:", error);
         if (error.code === 'auth/unauthorized-domain') {
           toast.error("Domain Unauthorized", {
             description: "This domain is not authorized in Firebase. Check Firebase Console > Auth > Settings > Authorized Domains."
@@ -47,12 +47,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
     const unsubscribe = onAuthStateChanged(auth, (u) => {
-      console.log("Auth state changed:", u ? u.email : "No user");
+      if (process.env.NODE_ENV === 'development') console.log("Auth state changed:", u ? u.email : "No user");
       setUser(u);
       setLoading(false);
       clearTimeout(timeout);
     }, (error) => {
-      console.error("Auth state observer error:", error);
+      if (process.env.NODE_ENV === 'development') console.error("Auth state observer error:", error);
       setLoading(false);
       clearTimeout(timeout);
     });
@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email?: string, password?: string) => {
     const origin = typeof window !== "undefined" ? window.location.origin : "unknown";
-    console.log("Initiating login from origin:", origin);
+    if (process.env.NODE_ENV === 'development') console.log("Initiating login from origin:", origin);
     
     try {
       if (email && password) {
@@ -75,7 +75,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         try {
           await signInWithPopup(auth, googleProvider);
         } catch (popupError: any) {
-          console.log("Popup failed, checking if redirect is needed:", popupError.code);
+          if (process.env.NODE_ENV === 'development') console.log("Popup fallback:", popupError.code);
           
           // If popup is blocked or domain is unauthorized, try redirect as fallback
           if (
@@ -83,7 +83,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             popupError.code === 'auth/popup-blocked' ||
             popupError.code === 'auth/cancelled-popup-request'
           ) {
-            console.log("Attempting redirect fallback...");
+            if (process.env.NODE_ENV === 'development') console.log("Attempting redirect fallback...");
             await signInWithRedirect(auth, googleProvider);
             return;
           }
@@ -91,7 +91,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       }
     } catch (error: any) {
-      console.error("Login failed:", error);
+      if (process.env.NODE_ENV === 'development') console.error("Login failed:", error);
       
       let message = "Authentication Failed";
       let description = error.message;

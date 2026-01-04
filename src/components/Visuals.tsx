@@ -36,15 +36,24 @@ export function LightRays() {
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+";
 export function DecryptedText({ text, speed = 50, maxIterations = 10, className = "" }: { text: string; speed?: number; maxIterations?: number; className?: string }) {
   const [displayText, setDisplayText] = useState(text);
+  
   useEffect(() => {
     let iteration = 0;
+    let isMounted = true;
+    
     const interval = setInterval(() => {
+      if (!isMounted) return;
       setDisplayText((prev) => prev.split("").map((char, i) => i < iteration ? text[i] : characters[Math.floor(Math.random() * characters.length)]).join(""));
       if (iteration >= text.length) clearInterval(interval);
       iteration += 1 / maxIterations;
     }, speed);
-    return () => clearInterval(interval);
+    
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, [text, speed, maxIterations]);
+  
   return <motion.span className={className}>{displayText}</motion.span>;
 }
 
@@ -124,7 +133,19 @@ export const BatteryStorage = ({ position, energy }: any) => (
 
 export const DigitalTwin = ({ data, onBuildingClick }: any) => (
   <div className="w-full h-full min-h-[500px] relative rounded-3xl overflow-hidden bg-black">
-    <Canvas shadows camera={{ position: [25, 25, 25], fov: 40 }}>
+    <Canvas 
+      shadows 
+      camera={{ position: [25, 25, 25], fov: 40 }}
+      onCreated={(state) => {
+        state.gl.outputColorSpace = 'srgb';
+        if (process.env.NODE_ENV === 'development') {
+          state.gl.debug.checkShaderErrors = true;
+        }
+      }}
+      onError={(err) => {
+        if (process.env.NODE_ENV === 'development') console.error('Canvas error:', err);
+      }}
+    >
       <Suspense fallback={null}>
         <OrbitControls maxPolarAngle={Math.PI / 2.2} minDistance={15} maxDistance={60} makeDefault />
         <Sky distance={450000} sunPosition={[0, 1, 0]} rayleigh={2} />
