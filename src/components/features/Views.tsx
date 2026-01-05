@@ -131,14 +131,6 @@ export function InfrastructureView({ data, onBuildingClick }: any) {
                   </div>
                 </div>
               </div>
-              
-              <Button 
-                variant="cyber" 
-                onClick={() => onBuildingClick(key.replace('_', ' '), sector.current)} 
-                className="w-full mt-10 h-14 rounded-2xl text-[10px] font-black uppercase tracking-widest group-hover:bg-cyan-500 group-hover:text-black transition-all"
-              >
-                Synthesize Advice
-              </Button>
             </GlassPanel>
           );
         })}
