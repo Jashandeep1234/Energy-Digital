@@ -7,13 +7,13 @@ import { getDatabase, ref, onValue, set, get, update } from "firebase/database";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyDp-HOsP1Slkd-RNRAuMh-b94e4nA8F7Cg",
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "energy-digital.firebaseapp.com",
-  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL || "https://energy-digital-default-rtdb.firebaseio.com",
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "energy-digital",
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "energy-digital.firebasestorage.app",
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "467780784962",
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:467780784962:web:88daffcdef9711faac2edb",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY, 
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
@@ -30,12 +30,13 @@ const genAI = new GoogleGenerativeAI(apiKey);
 
 // Tiered model selection for maximum reliability
 const MODELS = [
-  "gemini-2.0-flash-exp",
-  "gemini-1.5-flash", 
-  "gemini-1.5-flash-8b",
-  "gemini-1.5-pro",
-  "gemini-pro"
+  "gemini-2.5-flash",
+  "gemini-2.5-pro",
+  "gemini-3-flash",
+  "gemini-3-pro"
 ];
+
+
 
 /**
  * Fallback generator for when AI quota is exhausted.
