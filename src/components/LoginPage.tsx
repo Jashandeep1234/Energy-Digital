@@ -37,10 +37,10 @@ export function LoginPage() {
           className="space-y-4"
         >
           <h1 className="text-6xl font-black tracking-tighter">
-            NEXUS<span className="text-blue-500">TWIN</span>
+            ENERGY<span className="text-blue-500">DIGITAL</span>
           </h1>
           <p className="text-lg text-white/60 font-medium max-w-md">
-            Next-gen campus energy management. Real-time digital twin synthesis
+            Next-gen campus energy management. Real-time energy digital synthesis
             and neural load balancing.
           </p>
         </motion.div>

@@ -35,7 +35,7 @@ export function Sidebar({ activeTab, onTabChange, onLogout }: any) {
           </div>
           <div className="ml-6 flex flex-col opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 whitespace-nowrap overflow-hidden">
             <span className="font-black tracking-tightest text-2xl leading-none">
-              NEXUS<span className="text-cyan-400">TWIN</span>
+              ENERGY<span className="text-cyan-400">DIGITAL</span>
             </span>
             <span className="text-[8px] font-black uppercase tracking-[0.4em] text-white/20 mt-1">v2.5.0_PRO_CORE</span>
           </div>

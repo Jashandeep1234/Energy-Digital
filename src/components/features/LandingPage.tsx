@@ -29,8 +29,8 @@ export function LandingPage() {
             <Zap className="h-5 sm:h-7 w-5 sm:w-7 text-white fill-white" />
           </motion.div>
           <span className="text-lg sm:text-2xl font-black tracking-tighter uppercase flex items-center">
-            Nexus
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 ml-1">Twin</span>
+            Energy
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 ml-1">Digital</span>
           </span>
         </div>
         
@@ -102,7 +102,7 @@ export function LandingPage() {
                   transition={{ duration: 0.8, delay: 0.3 }}
                   className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-fuchsia-500"
                 >
-                  ENERGY TWIN
+                  ENERGY DIGITAL
                 </motion.span>
               </span>
             </h1>
@@ -283,7 +283,7 @@ export function LandingPage() {
               <div className="h-8 w-8 rounded-lg bg-cyan-500 flex items-center justify-center">
                 <Zap className="h-5 w-5 text-black fill-black" />
               </div>
-              <span className="font-black uppercase tracking-widest text-lg">Nexus Twin</span>
+              <span className="font-black uppercase tracking-widest text-lg">Energy Digital</span>
             </div>
             <p className="text-white/20 text-[10px] font-black tracking-[0.4em] uppercase max-w-xs">
               Autonomous Infrastructure Management & Digital Twin Synthesis.
