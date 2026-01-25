@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Energy Twin | 3D Smart Monitoring",
+  title: "Energy Digital | 3D Smart Monitoring",
   description: "AI-Powered Digital Twin for Campus Energy Monitoring",
 };
 
